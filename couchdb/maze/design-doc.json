@@ -8,7 +8,7 @@
 
   "shows" : {
     "cells" : "function(doc,req){
-    return {body:doc.cells, headers : {'content-type':'application/json'}}
+    return {body : doc.cells, headers : {'content-type':'application/json'}}
     }"
   },
     

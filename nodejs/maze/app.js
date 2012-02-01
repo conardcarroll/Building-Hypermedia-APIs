@@ -11,6 +11,18 @@ var app = module.exports = express.createServer();
 var cradle = require('cradle');
 var db = new(cradle.Connection)().database('maze-data');
 
+// for data
+var bigData = {};
+bigData.data = '';
+
+// for file access
+var fs = require('fs');
+var dataFile = fs.readFile('./data.json', function(err, data) {
+	console.log(data);
+	bigData.data = JSON.parse(data);
+	console.log('bigData ' + JSON.stringify(bigData.data));
+});
+
 // global data
 var contentType = 'application/xml';
 
