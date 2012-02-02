@@ -27,11 +27,11 @@ curl -v http://localhost:5984/collection-data-tasks/_design/example/_view/due_da
 curl -v http://localhost:5984/collection-data-tasks/_design/example/_view/due_date?startkey=\"2011-12-30\"&endkey=\"2011-12-31\"
 curl -v http://localhost:5984/collection-data-tasks/_design/example/_view/due_date
 
-# echo 'testing shows...'
-# curl -v -H accept:application/json http://localhost:5984/collection-data-tasks/_design/example/_show/tasks
-# echo '.'
+echo 'testing shows...'
+curl -v -H accept:application/json http://localhost:5984/collection-data-tasks/_design/example/_show/tasks
+echo '.'
 
-# echo 'testing validator...'
-# curl -vX PUT http://localhost:5984/collection-data-tasks/task2 -d @task1.json
+echo 'testing validator...'
+curl -vX PUT http://localhost:5984/collection-data-tasks/task2 -d @task1.json
 
-# echo '*** all passed ***'
+echo '*** all passed ***'
