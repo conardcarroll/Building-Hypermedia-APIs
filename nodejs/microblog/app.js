@@ -68,7 +68,7 @@ function validateUser(req, res, next) {
   req.credentials = credentials;
 
   // ok, let's look this user up
-  view = '/_design/microblog/_view/users_by_id';
+  view = '_design/microblog/_view/users_by_id';
   
   options = {};
   options.descending='true';
@@ -96,7 +96,7 @@ app.get('/microblog/', function(req, res){
 
   var ctype;
   
-  var view = '/_design/microblog/_view/posts_all';
+  var view = '_design/microblog/_view/posts_all';
   
   var options = {};
   options.descending = 'true';
@@ -119,7 +119,7 @@ app.get('/microblog/messages/:i', function(req, res){
   var view, options, id, ctype;
   id = req.params.i;
   
-  view = '/_design/microblog/_view/posts_by_id';
+  view = '_design/microblog/_view/posts_by_id';
   options = {};
   options.descending='true';
   options.key=String.fromCharCode(34)+id+String.fromCharCode(34);
@@ -176,7 +176,7 @@ app.get('/microblog/users/:i', function(req, res){
   id = req.params.i;
   ctype = acceptsXml(req);
     
-  view = '/_design/microblog/_view/users_by_id';
+  view = '_design/microblog/_view/users_by_id';
   options = {};
   options.descending='true';
   options.key=String.fromCharCode(34)+id+String.fromCharCode(34);
@@ -199,7 +199,7 @@ app.get('/microblog/user-messages/:i', function(req, res){
   id = req.params.i;
   ctype = acceptsXml(req);
   
-  view = '/_design/microblog/_view/posts_by_user';
+  view = '_design/microblog/_view/posts_by_user';
   options = {};
   options.descending='true';
   options.key=String.fromCharCode(34)+id+String.fromCharCode(34);
@@ -218,7 +218,7 @@ app.get('/microblog/user-messages/:i', function(req, res){
 app.get('/microblog/users/', function(req, res){
   var ctype;
   
-  var view = '/_design/microblog/_view/users_by_id';
+  var view = '_design/microblog/_view/users_by_id';
   
   ctype = acceptsXml(req);
     
