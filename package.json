@@ -1,0 +1,9 @@
+{
+	"name": "Building-Hypermedia-APIs",
+	"version": "0.0.1",
+    "dependencies": {
+        "cradle": "0.5.8",
+		"ejs": "0.6.1",
+		"express" : "2.5.6"
+    }
+}
