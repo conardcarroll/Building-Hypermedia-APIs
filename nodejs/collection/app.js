@@ -16,6 +16,9 @@ var db = new(cradle.Connection)().database('collection-data-tasks');
 // global data
 var contentType = 'application/json';
 
+// sniffer
+var sniffer = require('../httpsniffer');
+
 // Configuration
 app.configure(function() {
     app.set('views', __dirname + '/views');
@@ -40,12 +43,8 @@ function() {
 });
 
 // register custom media type as a JSON format
-//express.bodyParser.parse['application/collection+json'] = JSON.parse;
-
-//  express.bodyParser.parse['application/json'] = JSON.parse;
-
-// express.bodyParser.parse['text/json'] = JSON.parse;
-
+express.bodyParser.parse['application/collection+json'] =
+  express.bodyParser.parse['application/json'];
 
 // Routes
 /* handle default task list */
@@ -318,6 +317,7 @@ function today() {
 
 // Only listen on $ node app.js
 if (!module.parent) {
+	sniffer.sniffOn(app);
     app.listen(3000);
     console.log("Express server listening on port %d", app.address().port);
 }

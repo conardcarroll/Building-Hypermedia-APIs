@@ -7,7 +7,7 @@ var cjs = function() {
   g.data = {};
   g.item = {};
   g.collectionUrl = ''; 
-  g.contentType = 'application/json';
+  g.contentType = 'application/collection+json';
   g.filterUrl = '';
 
   g.inputForm=true;
@@ -400,10 +400,6 @@ var cjs = function() {
       href = form.action;
       etag = form.getAttribute('etag');
 
-      var bodyData = JSON.parse(item);
-      var sendData = JSON.stringify(bodyData);
-
-
       if(href)
       {
         ajax=new XMLHttpRequest();
@@ -416,7 +412,7 @@ var cjs = function() {
             ajax.open('post',href,false);          
           }
           ajax.setRequestHeader('content-type',g.contentType);
-          ajax.send(sendData);
+          ajax.send(item);
           if(ajax.status>399) {
             alert('Error sending task!\n'+ajax.status);
           }
