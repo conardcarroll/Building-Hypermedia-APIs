@@ -40,7 +40,12 @@ function() {
 });
 
 // register custom media type as a JSON format
-express.bodyParser.parse['application/collection+json'] = JSON.parse;
+//express.bodyParser.parse['application/collection+json'] = JSON.parse;
+
+//  express.bodyParser.parse['application/json'] = JSON.parse;
+
+// express.bodyParser.parse['text/json'] = JSON.parse;
+
 
 // Routes
 /* handle default task list */
