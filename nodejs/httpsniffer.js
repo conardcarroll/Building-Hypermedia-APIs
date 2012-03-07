@@ -2,10 +2,15 @@ var util = require('util');
 var url = require('url');
 
 exports.sniffOn = function(server) {
-	console.log("Sniffing: " + server)
+	console.log("Sniffing: " + util.inspect(server));
+	
 	server.on('request', function(req, res) {
 		util.log('e_request');
 		util.log(reqToString(req));
+	});
+	
+	server.on('connection', function(socket) {
+		util.log('e_connection socket=' + util.inspect(socket, 1));
 	});
 	
 	server.on('close', function(errno) {
@@ -18,11 +23,13 @@ exports.sniffOn = function(server) {
 		res.writeContinue();
 	});
 	
-	server.on('clientError', function() {
-		util.log('e_clientError');
+	server.on('upgrade', function(req, res, head) {
+		util.log('e_upgrade');
 	});
 	
-	// server.on('connection')
+	server.on('clientError', function() {
+		util.log('e_clientError');
+	});	
 }
 
 var reqToString = function(req) {
