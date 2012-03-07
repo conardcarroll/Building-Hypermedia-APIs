@@ -272,8 +272,14 @@ function(req, res) {
 
     db.save(idx, rev, item,
     function(err, doc) {
-        // return the same item
-        res.redirect('/collection/tasks/' + idx, 302);
+		if (err) {
+            res.status = 400;
+            res.send(err);
+        }
+        else {
+			// return the same item
+            res.redirect('/collection/tasks/' + idx, 302);
+        }
     });
 });
 
