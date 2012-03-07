@@ -9,6 +9,9 @@
 var express = require('express');
 var app = module.exports = express.createServer();
 
+// sniffer
+var sniffer = require('../httpsniffer');
+
 // for couch
 var cradle = require('cradle');
 var host = 'https://remote-couchdb-server.com';
@@ -385,6 +388,7 @@ function badRequest(res) {
 
 // Only listen on $ node app.js
 if (!module.parent) {
+  sniffer.sniffOn(app);
   app.listen(3000);
   console.log("Express server listening on port %d", app.address().port);
 }
