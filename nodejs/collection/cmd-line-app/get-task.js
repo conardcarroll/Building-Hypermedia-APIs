@@ -3,6 +3,7 @@
 
 var http = require('http');
 var util = require('util');
+var querystring = require('querystring');
 
 // set teh vars
 var client,
@@ -39,7 +40,7 @@ if (process.argv.length < 3) {
 
         args.queryParameters = [];
         for (var i = 3, j = 0; i < process.argv.length; i++, j++) {
-            args.queryParmeters[j] = process.	argv[i];
+            args.queryParmeters += process.argv[i];
         }
 
         showResults();
@@ -49,50 +50,64 @@ if (process.argv.length < 3) {
 // show the results of the query
 function showResults() {
     var query = {};
+	query.param = [];
     getQueries(function(data) {
         for (var i = 0; i < data.length; i++) {
-			if(data[i].prompt == args.queryName) {
-			  console.log('Found query ' + args.queryName);	
-				query.rel = data[i].rel;
-				query.href = data[i].href
+            if (data[i].prompt == args.queryName) {
+				console.log('found query');
 				
-				console.log('href ' + query.href);
-				
-				
-				var reqq = client.request('GET',
-					query.href.replace('http://localhost:3000',''), {
-			        'host': host + ':' + port
-			    });
-				reqq.on('response',
-				function(response) {
-					 var body = '';
-				        response.on('data',
-				        function(chunk) {
-				            body += chunk;
-				        });
-				        response.on('error',
-				        function(error) {
-				            console.log(error);
-				        });
-				        response.on('end',
-				        function() {
-				            var data = JSON.parse(body);
-							console.log('items ' + JSON.stringify(data.collection.items));
-				        });
-				});
-				reqq.on('error',
-			    function(error) {
-			        console.log(util.inspect(error));
-			    });
-				
-			    reqq.end();
-			}
-		}
-		
-		if(query.href === undefined) {
-	    	console.log(args.queryName + ' is not an available query. Try ');
-			showQueries();
-		}
+                query.rel = data[i].rel;
+                query.href = data[i].href
+
+				if(data[i].data) {
+					query.href += '?';
+					for(var j = 0; j < data[i].data.length; j++) {
+					/*	var filter = {};
+						filter.name = data[i].data[j].name;
+						filter.value = process.argv[j + 3];
+						var qs = querystring.stringify(filter);
+						console.log('qs ' + qs);
+							
+						query.href += qs;
+					*/}
+				}
+				console.log('query ' + query);
+
+                var req = client.request('GET',
+                query.href.replace('http://localhost:3000', ''), {
+                    'host': host + ':' + port
+                });
+                req.on('response',
+                function(response) {
+                    var body = '';
+                    response.on('data',
+                    function(chunk) {
+                        body += chunk;
+                    });
+                    response.on('error',
+                    function(error) {
+                        console.log(error);
+                    });
+                    response.on('end',
+                    function() {
+                        var data = JSON.parse(body);
+						console.log('body ' + body);
+                        console.log('items ' + JSON.stringify(data.collection.items));
+                    });
+                });
+                req.on('error',
+                function(error) {
+                    console.log(util.inspect(error));
+                });
+
+                req.end();
+            }
+        }
+
+        if (query.href === undefined) {
+            console.log(args.queryName + ' is not an available query. Try ');
+            showQueries();
+        }
     });
 }
 
